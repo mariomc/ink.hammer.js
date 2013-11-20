@@ -24,7 +24,7 @@
     "tests"
   ],
   "dependencies": {
-    "Ink": "git@github.com:sapo/Ink.git#14aa54465c22d213b62fa8578c5fc89f6c6a70b3",
+    "Ink": "git@github.com:sapo/Ink.git#2d60b0bb83e4dabb73bcbfb233a39230df155a8d",
     "hammerjs": "~1.0.5"
   }
 }
