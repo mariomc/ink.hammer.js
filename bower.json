@@ -22,5 +22,9 @@
     "public/bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "Ink": "git@github.com:sapo/Ink.git#14aa54465c22d213b62fa8578c5fc89f6c6a70b3",
+    "hammerjs": "~1.0.5"
+  }
 }
