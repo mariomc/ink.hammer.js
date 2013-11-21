@@ -1,0 +1,14 @@
+{
+  "name": "ink",
+  "homepage": "https://github.com/sapo/Ink",
+  "version": "2.2.1",
+  "_release": "2.2.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.2.1",
+    "commit": "ce8b56864fa2c1ae98e2ddee378fa61d282def42"
+  },
+  "_source": "git://github.com/sapo/Ink.git",
+  "_target": "~2.2.1",
+  "_originalSource": "Ink"
+}
