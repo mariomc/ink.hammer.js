@@ -176,7 +176,7 @@
   Hammer.plugins.showTouches = function(force) {
     // the circles under your fingers
     var template_style = 'position:absolute;z-index:9999;left:0;top:0;height:14px;width:14px;border:solid 2px #777;' +
-      'background:rgba(255,255,255,.7);border-radius:20px;pointer-events:none;' +
+      'background:red; background: rgba(255,255,255,.7);border-radius:20px;pointer-events:none;' +
       'margin-top:-9px;margin-left:-9px;';
 
     // elements by identifier
@@ -214,13 +214,12 @@
 
           var id = touch.identifier;
           touches_index[id] = touch;
-
           // new touch element
           if(!touch_elements[id]) {
             // create new element and attach base styles
             var template = document.createElement('div');
             template.setAttribute('style', template_style);
-
+            template.style.setAttribute('cssText', template_style);
             // append element to body
             document.body.appendChild(template);
 
@@ -238,10 +237,10 @@
   };
 })(window.Hammer);
 </script>
-<script src="ink.hammer.js"></script>
 <script>
  Hammer.plugins.showTouches();
 </script>
+
 <script>
  Hammer.plugins.fakeMultitouch();
 
@@ -268,7 +267,7 @@
 
     function logEvent(ev) {
         if(!ev.gesture) {
-            return; 
+            return;
         }
 
         // add to the large event log at the bottom of the page
