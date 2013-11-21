@@ -228,8 +228,8 @@
           }
 
           // Paul Irish says that translate is faster then left/top
-          touch_elements[id].style.left = Ink.Dom.Event.pointerX(ev) + 'px';
-          touch_elements[id].style.top = Ink.Dom.Event.pointerY(ev) + 'px';
+          touch_elements[id].style.left = (touch.pageX || Ink.Dom.Event.pointerX(ev)) + 'px';
+          touch_elements[id].style.top = (touch.pageY || Ink.Dom.Event.pointerY(ev)) + 'px';
         }
 
         removeUnusedElements();
