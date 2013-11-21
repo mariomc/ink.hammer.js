@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hammer.js</title>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/ink/2.2.1/css/ink.css" rel="stylesheet">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <style>
+
+        body {
+            padding: 30px;
+            overflow-x: hidden;
+        }
+
+        #center-pos {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            overflow: hidden;
+            border-radius: 30px;
+            border: solid 1px rgba(0,0,0,.3);
+            margin-left: -16px;
+            margin-top: -16px;
+            pointer-events: none;
+        }
+
+        .sidebar {
+            font-size: 12px;
+        }
+
+        .sidebar li {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .events li.active { background: lightgreen; }
+
+        .properties li { white-space: nowrap; }
+        .properties span { margin-left: 5px; }
+
+        .hitarea {
+            background: aliceblue;
+            padding: 20px;
+            border: solid #ccc 1px;
+        }
+
+        .hitarea-nested {
+            background: lightblue;
+        }
+
+        @media screen and (max-width:640px) {
+            body {
+                padding: 10px;
+            }
+
+            .sidebar {
+                float: none;
+                width: auto;
+                margin-bottom: 25px;
+            }
+
+            .sidebar li {
+                display: inline-block;
+                width: 30%;
+            }
+
+            .sidebar li.property-gesture {
+                position: fixed;
+                right: 0;
+                top: 0;
+                background: lightgreen;
+                padding: 1px 4px;
+                width: auto;
+            }
+        }
+
+        @media screen and (max-width:480px) {
+            .sidebar li {
+                width: 49%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="ink-grid">
+    <p class="ink-alert basic"><strong>Press shift on your desktop for multitouch.</strong></p>
+    <div class="column-group gutters"> <!-- or half-gutters -->
+    <div class="large-60 push-left">
+        <div id="hitarea" class="hitarea">
+            <h3>Hitarea</h3>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="#">Praesent at erat felis.</a> Donec ornare ligula non nibh vulputate sollicitudin. Cras sodales eros a velit pulvinar vehicula. In sed lorem lectus, vel dapibus nulla. Mauris lacus massa, volutpat vel suscipit at, lacinia condimentum libero. Praesent nec metus ligula. Morbi porttitor rhoncus mattis.
+            </p>
+            <p>
+            Donec nisi ante, eleifend vitae luctus vel, auctor et nibh. Donec scelerisque urna id massa ultricies in facilisis purus rutrum.
+            Proin tristique luctus leo vitae feugiat. Donec sit amet ipsum mi, nec bibendum sem. Nullam sodales aliquet venenatis.
+            </p>
+        </div>
+    </div>
+    <div class="large-20">
+<div class="sidebar box">
+    <h4>Events</h4>
+    <ul class="unstyled events" id="events-list">
+        <li id="log-gesture-touch">touch</li>
+        <li id="log-gesture-release">release</li>
+        <li id="log-gesture-hold">hold</li>
+        <li id="log-gesture-tap">tap</li>
+        <li id="log-gesture-doubletap">doubletap</li>
+
+        <li id="log-gesture-dragstart">dragstart</li>
+        <li id="log-gesture-drag">drag</li>
+        <li id="log-gesture-dragend">dragend</li>
+        <li id="log-gesture-dragleft">dragleft</li>
+        <li id="log-gesture-dragright">dragright</li>
+        <li id="log-gesture-dragup">dragup</li>
+        <li id="log-gesture-dragdown">dragdown</li>
+
+        <li id="log-gesture-swipe">swipe</li>
+        <li id="log-gesture-swipeleft">swipeleft</li>
+        <li id="log-gesture-swiperight">swiperight</li>
+        <li id="log-gesture-swipeup">swipeup</li>
+        <li id="log-gesture-swipedown">swipedown</li>
+
+        <li id="log-gesture-transformstart">transformstart</li>
+        <li id="log-gesture-transform">transform</li>
+        <li id="log-gesture-transformend">transformend</li>
+        <li id="log-gesture-rotate">rotate</li>
+        <li id="log-gesture-pinch">pinch</li>
+        <li id="log-gesture-pinchin">pinchin</li>
+        <li id="log-gesture-pinchout">pinchout</li>
+    </ul>
+</div>
+</div>
+<div class="large-20">
+    <h4>EventData</h4>
+    <ul class="unstyled properties">
+        <li class="property-gesture"><strong>gesture</strong> <span id="log-prop-gesture"></span></li>
+        <li><strong>touches</strong> <span id="log-prop-touches"></span></li>
+        <li><strong>pointerType</strong> <span id="log-prop-pointerType"></span></li>
+        <li><strong>center</strong> <span id="log-prop-center"></span></li>
+        <li><strong>angle</strong> <span id="log-prop-angle"></span>&deg;</li>
+        <li><strong>direction</strong> <span id="log-prop-direction"></span></li>
+        <li><strong>distance</strong> <span id="log-prop-distance"></span>px</li>
+
+        <li><strong>deltaTime</strong> <span id="log-prop-deltaTime"></span>ms</li>
+        <li><strong>deltaX</strong> <span id="log-prop-deltaX"></span>px</li>
+        <li><strong>deltaY</strong> <span id="log-prop-deltaY"></span>px</li>
+
+        <li><strong>velocityX</strong> <span id="log-prop-velocityX"></span></li>
+        <li><strong>velocityY</strong> <span id="log-prop-velocityY"></span></li>
+
+        <li><strong>scale</strong>  <span id="log-prop-scale"></span></li>
+        <li><strong>rotation</strong> <span id="log-prop-rotation"></span>&deg;</li>
+
+        <li><strong>target</strong> <span id="log-prop-target"></span></li>
+    </ul>
+</div>
+    </div>
+</div>
+
+
+
+<script src="bower_components/hammerjs/dist/hammer.js"></script>
+<script src="bower_components/hammerjs/plugins/hammer.fakemultitouch.js"></script>
+<script src="bower_components/Ink/Inkjs/Ink/1/lib.js"></script>
+<script src="bower_components/Ink/Inkjs/Ink/Dom/Event/1/lib.js"></script>
+
+<script src="bower_components/bean/bean.js"></script>
+<script>
+(function(Hammer) {
+  /**
+   * ShowTouches gesture
+   * show all touch on the screen by placing elements at there pageX and pageY
+   * @param   {Boolean}   [force]
+   */
+  Hammer.plugins.showTouches = function(force) {
+    // the circles under your fingers
+    var template_style = 'position:absolute;z-index:9999;left:0;top:0;height:14px;width:14px;border:solid 2px #777;' +
+      'background:rgba(255,255,255,.7);border-radius:20px;pointer-events:none;' +
+      'margin-top:-9px;margin-left:-9px;';
+
+    // elements by identifier
+    var touch_elements = {};
+    var touches_index = {};
+
+    /**
+     * remove unused touch elements
+     */
+    function removeUnusedElements() {
+      // remove unused touch elements
+      for(var key in touch_elements) {
+        if(touch_elements.hasOwnProperty(key) && !touches_index[key]) {
+          document.body.removeChild(touch_elements[key]);
+          delete touch_elements[key];
+        }
+      }
+    }
+
+    Hammer.detection.register({
+      name    : 'show_touches',
+      priority: 0,
+      handler : function(ev, inst) {
+        touches_index = {};
+
+        // clear old elements when not using a mouse
+        if(ev.pointerType != Hammer.POINTER_MOUSE && !force) {
+          removeUnusedElements();
+          return;
+        }
+
+        // place touches by index
+        for(var t = 0, total_touches = ev.touches.length; t < total_touches; t++) {
+          var touch = ev.touches[t];
+
+          var id = touch.identifier;
+          touches_index[id] = touch;
+
+          // new touch element
+          if(!touch_elements[id]) {
+            // create new element and attach base styles
+            var template = document.createElement('div');
+            template.setAttribute('style', template_style);
+
+            // append element to body
+            document.body.appendChild(template);
+
+            touch_elements[id] = template;
+          }
+
+          // Paul Irish says that translate is faster then left/top
+          touch_elements[id].style.left = Ink.Dom.Event.pointerX() + 'px';
+          touch_elements[id].style.top = Ink.Dom.Event.pointerY() + 'px';
+        }
+
+        removeUnusedElements();
+      }
+    });
+  };
+})(window.Hammer);
+</script>
+<script src="ink.hammer.js"></script>
+ <!--[if !IE]> -->
+<script>
+ Hammer.plugins.showTouches();
+</script>
+<!-- <![endif]-->
+
+<script>
+ Hammer.plugins.fakeMultitouch();
+
+    function getEl(id) {
+        return document.getElementById(id);
+    }
+
+    var log_elements = {};
+    var prevent_scroll_drag = true;
+    var prev_default = document.getElementById('#prevent-default');
+
+    function getLogElement(type, name) {
+        var el = log_elements[type + name];
+        if(!el) {
+            return log_elements[type + name] = getEl("log-"+ type +"-"+ name);
+        }
+        return el;
+    }
+
+    // log properties
+    var properties = ['gesture','center','deltaTime','angle','direction',
+        'distance','deltaX','deltaY','velocityX','velocityY', 'pointerType',
+        'scale','rotation','touches','target'];
+
+    function logEvent(ev) {
+        if(!ev.gesture) {
+            return;
+        }
+
+        // add to the large event log at the bottom of the page
+        var log = [this.id, ev.type];
+        //event_log.innerHTML = log.join(" - ") +"\n" + event_log.innerHTML;
+
+        // highlight gesture
+        var event_el = getLogElement('gesture', ev.type);
+        event_el.className = "active";
+
+
+        for(var i= 0,len=properties.length; i<len; i++) {
+            var prop = properties[i];
+            var value = ev.gesture[prop];
+            switch(prop) {
+                case 'center':
+                    value = value.pageX +"x"+ value.pageY;
+                    break;
+                case 'gesture':
+                    value = ev.type;
+                    break;
+                case 'target':
+                    value = ev.gesture.target.tagName;
+                    break;
+                case 'touches':
+                    value = ev.gesture.touches.length;
+                    break;
+            }
+            getLogElement('prop', prop).innerHTML = value;
+        }
+    }
+
+
+    // get all the events
+    var all_events = "touch release hold tap doubletap dragstart drag dragend dragleft dragright dragup dragdown swipe swipeleft swiperight swipeup swipedown transformstart transform transformend rotate pinch pinchin pinchout";
+
+
+    // start!
+    var hammertime = Ink.UI.Hammer(getEl('hitarea'), {
+            prevent_default: true,
+            no_mouseevents: false
+        })
+        .on(all_events, logEvent);
+
+</script>
+</body>
+</html>
