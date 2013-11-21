@@ -31,8 +31,8 @@ Ink.createModule('Ink.UI.Hammer', 1, ['Ink.Dom.Event'], function(InkEvent) {
         bean.on(element, types, function(ev){
             var data = ev.originalEvent || ev;
             if(data.pageX === undefined) {
-              data.pageX = InkEvent.pointerX(data);
-              data.pageY = InkEvent.pointerY(data);
+              data.pageX = ev.pageX || InkEvent.pointerX(ev);
+              data.pageY = ev.pageY || InkEvent.pointerY(ev);
             }
 
             if(!data.target) {
@@ -61,8 +61,8 @@ Ink.createModule('Ink.UI.Hammer', 1, ['Ink.Dom.Event'], function(InkEvent) {
             var data = ev.originalEvent || ev;
 
             if(data.pageX === undefined) {
-              data.pageX = InkEvent.pointerX(data);
-              data.pageY = InkEvent.pointerY(data);
+              data.pageX = ev.pageX || InkEvent.pointerX(ev);
+              data.pageY = ev.pageY || InkEvent.pointerY(ev);
             }
 
             if(!data.target) {
