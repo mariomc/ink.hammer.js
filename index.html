@@ -219,7 +219,9 @@
             // create new element and attach base styles
             var template = document.createElement('div');
             template.setAttribute('style', template_style);
-            template.style.setAttribute('cssText', template_style);
+            if(template.style.setAttribute) {
+               template.style.setAttribute('cssText', template_style);
+            }
             // append element to body
             document.body.appendChild(template);
 
